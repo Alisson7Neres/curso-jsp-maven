@@ -1,6 +1,8 @@
 package com.jsp.servlets;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,6 +27,7 @@ public class ServletLogin extends HttpServlet {
 	// Recebe os dados peça URL em parametros
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		doPost(request, response);
 	}
 
 	// Recebe os dados enviados por um formulario
@@ -53,8 +56,8 @@ public class ServletLogin extends HttpServlet {
 					RequestDispatcher redirecionar = request.getRequestDispatcher(url);
 					redirecionar.forward(request, response);
 				} else {
-					RequestDispatcher redirecionar = request.getRequestDispatcher("/index.jsp");
 					request.setAttribute("msg", "Informe o login e senha CORRETAMENTE!");
+					RequestDispatcher redirecionar = request.getRequestDispatcher("/index.jsp");
 					redirecionar.forward(request, response);
 				}
 			} else {
@@ -65,7 +68,7 @@ public class ServletLogin extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			RequestDispatcher redirecionar = request.getRequestDispatcher("error.jsp");
-			request.setAttribute("msg",e.getMessage());
+			request.setAttribute("msg", e.getMessage());
 			redirecionar.forward(request, response);
 		}
 	}
