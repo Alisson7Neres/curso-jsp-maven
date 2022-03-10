@@ -28,11 +28,40 @@
 							<div class="main-body">
 								<div class="page-wrapper">
 									<!-- Page-body start -->
-									<div class="page-body">
-										<div class="row">
-											<!-- task, page, download counter  start -->
-											<h3>Cadastro de usuário</h3>
-											<!--  project and team member end -->
+									<div class="row">
+										<div class="col-sm-12">
+											<!-- Basic Form Inputs card start -->
+											<div class="card">
+									
+												<div class="card-block">
+													<h4 class="sub-title">Cadastro de usuário</h4>
+                 <form class="form-material">
+														<div class="form-group form-default">
+															<input type="text" name="footer-email"
+																class="form-control" required="" disabled> <span
+																class="form-bar"></span> <label class="float-label">ID</label>
+														</div>
+														<div class="form-group form-default">
+                                                                <input type="text" name="footer-email" class="form-control" required="">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Nome</label>
+                                                            </div>
+                                                            <div class="form-group form-default">
+                                                                <input type="text" name="footer-email" class="form-control" required="">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Email (exa@gmail.com)</label>
+                                                            </div>
+                                                            <div class="form-group form-default">
+                                                                <input type="password" name="footer-email" class="form-control" required="">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Password</label>
+                                                            </div>
+                                                            
+                                                            <button class="btn btn-primary waves-effect waves-light">Salvar</button>
+                                                            <button class="btn btn-danger waves-effect waves-light">Cancelar</button>
+                                                        </form>
+												</div>
+											</div>
 										</div>
 									</div>
 									<!-- Page-body end -->
