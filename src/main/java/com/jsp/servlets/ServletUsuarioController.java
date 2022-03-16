@@ -31,6 +31,8 @@ public class ServletUsuarioController extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 		try {
+			
+			String msg = "Operação realizada com sucesso!";
 
 			ModelLogin modelLogin = new ModelLogin();
 
@@ -45,10 +47,15 @@ public class ServletUsuarioController extends HttpServlet {
 			modelLogin.setEmail(email);
 			modelLogin.setLogin(login);
 			modelLogin.setSenha(senha);
-
-			modelLogin = daoUsuarioRepository.gravarUsuario(modelLogin);
 			
-			request.setAttribute("msg", "Operação realizada com sucesso!");
+			if(daoUsuarioRepository.validarLogin(modelLogin.getLogin()) && modelLogin.getId() == null) {
+				msg = "Já existe usuário com o mesmo login! Informe outro!";
+			} else {
+				modelLogin = daoUsuarioRepository.gravarUsuario(modelLogin);
+			}
+
+			
+			request.setAttribute("msg", msg);
 			request.setAttribute("modelLogin", modelLogin);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("principal/usuario.jsp");
 			dispatcher.forward(request, response);
@@ -57,6 +64,8 @@ public class ServletUsuarioController extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
 			request.setAttribute("msg", e.getMessage());
 			dispatcher.forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
