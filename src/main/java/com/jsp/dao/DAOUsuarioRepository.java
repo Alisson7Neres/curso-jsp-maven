@@ -32,6 +32,7 @@ public class DAOUsuarioRepository {
 		return this.consultaUsuario(objeto.getLogin());
 	}
 	
+
 	public ModelLogin consultaUsuario(String login) throws SQLException {
 		
 		ModelLogin modelLogin = new ModelLogin();
@@ -65,5 +66,19 @@ public class DAOUsuarioRepository {
 			return result.getBoolean("existe");
 		}
 		return false;
+	}
+	public void atualizarUsuario(ModelLogin objeto) throws SQLException {
+		
+		String sql = "UPDATE model_login SET senha=?, login=?, nome=?, email=? WHERE id = "+objeto.getId()+";";
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setString(1, objeto.getSenha());
+		statement.setString(2, objeto.getLogin());
+		statement.setString(3, objeto.getNome());
+		statement.setString(4, objeto.getEmail());
+		
+		statement.executeUpdate();
+		connection.commit();
 	}
 }
