@@ -67,6 +67,7 @@ public class DAOUsuarioRepository {
 		}
 		return false;
 	}
+	
 	public void atualizarUsuario(ModelLogin objeto) throws SQLException {
 		
 		String sql = "UPDATE model_login SET senha=?, login=?, nome=?, email=? WHERE id = "+objeto.getId()+";";
@@ -77,6 +78,16 @@ public class DAOUsuarioRepository {
 		statement.setString(2, objeto.getLogin());
 		statement.setString(3, objeto.getNome());
 		statement.setString(4, objeto.getEmail());
+		
+		statement.executeUpdate();
+		connection.commit();
+	}
+	
+	public void deletar(String id) throws SQLException {
+		
+		String sql = "DELETE FROM model_login where id = ?;";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setLong(1, Long.parseLong(id));
 		
 		statement.executeUpdate();
 		connection.commit();

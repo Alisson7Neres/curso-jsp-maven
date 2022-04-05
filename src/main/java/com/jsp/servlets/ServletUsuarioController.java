@@ -1,7 +1,6 @@
 package com.jsp.servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,24 +26,44 @@ public class ServletUsuarioController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		try {
+
+			String acao = request.getParameter("acao");
+
+			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
+
+				String id = request.getParameter("id");
+
+				daoUsuarioRepository.deletar(id);
+
+				request.setAttribute("msg", "Excluido com sucesso!");
+			}
+
+			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			RequestDispatcher redirecionar = request.getRequestDispatcher("/erro.jsp");
+			request.setAttribute("msg", e.getMessage());
+			redirecionar.forward(request, response);
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
 
-		System.out.println("POST");
 		try {
 
 			String msg = "Operação realizada com sucesso!";
-
-			ModelLogin modelLogin = new ModelLogin();
 
 			String id = request.getParameter("id");
 			String nome = request.getParameter("nome");
 			String email = request.getParameter("email");
 			String login = request.getParameter("login");
 			String senha = request.getParameter("senha");
+
+			ModelLogin modelLogin = new ModelLogin();
 
 			modelLogin.setId(id != null && !id.isEmpty() ? Long.parseLong(id) : null);
 			modelLogin.setNome(nome);
@@ -53,31 +72,27 @@ public class ServletUsuarioController extends HttpServlet {
 			modelLogin.setSenha(senha);
 
 			if (daoUsuarioRepository.validarLogin(modelLogin.getLogin()) && modelLogin.getId() == null) {
-				msg = "Já existe usuário com o mesmo login! Informe outro!";
+				msg = "Já existe usuário com o mesmo login, informe outro login;";
 			} else {
-
 				if (modelLogin.isNovo()) {
+					msg = "Gravado com sucesso!";
 					daoUsuarioRepository.gravarUsuario(modelLogin);
-					msg = "Usuário cadastrado";
 				} else {
+					msg = "Atualizado com sucesso!";
 					daoUsuarioRepository.atualizarUsuario(modelLogin);
-					msg = "Usuário atualizado";
 				}
+
 			}
 
 			request.setAttribute("msg", msg);
 			request.setAttribute("modelLogin", modelLogin);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("principal/usuario.jsp");
-			dispatcher.forward(request, response);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
-			request.setAttribute("msg", e.getMessage());
-			dispatcher.forward(request, response);
+			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+
 		} catch (Exception e) {
 			e.printStackTrace();
+			RequestDispatcher redirecionar = request.getRequestDispatcher("erro.jsp");
+			request.setAttribute("msg", e.getMessage());
+			redirecionar.forward(request, response);
 		}
-
 	}
-
 }
