@@ -26,40 +26,43 @@ public class ServletUsuarioController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-
-			String acao = request.getParameter("acao");
-
-			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
-
-				String id = request.getParameter("id");
-
-				daoUsuarioRepository.deletar(id);
-
-				request.setAttribute("msg", "Excluido com sucesso!");
-				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
-				
-			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar-ajax")) {
-
-				String id = request.getParameter("id");
-
-				daoUsuarioRepository.deletar(id);
-
-				response.getWriter().write("Excluido com sucesso!");
-			} else {
-				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+		try {	
+			
+			 String acao  = request.getParameter("acao");
+			 
+			 if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
+				 
+				 String idUser = request.getParameter("id");
+				 
+				 daoUsuarioRepository.deletar(idUser);
+				 
+				 request.setAttribute("msg", "Excluido com sucesso!");
+				 request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			 }
+			 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarajax")) {
+					 
+					 String idUser = request.getParameter("id");
+					 
+					 daoUsuarioRepository.deletar(idUser);
+					 
+					 response.getWriter().write("Excluido com sucesso!");
+					 
+			 }else {
+				 request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			 }
+			 
+			
+			 
+			 
+			}catch (Exception e) {
+				e.printStackTrace();
+				RequestDispatcher redirecionar = request.getRequestDispatcher("erro.jsp");
+				request.setAttribute("msg", e.getMessage());
+				redirecionar.forward(request, response);
 			}
 
-
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			RequestDispatcher redirecionar = request.getRequestDispatcher("/erro.jsp");
-			request.setAttribute("msg", e.getMessage());
-			redirecionar.forward(request, response);
 		}
-
-	}
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
