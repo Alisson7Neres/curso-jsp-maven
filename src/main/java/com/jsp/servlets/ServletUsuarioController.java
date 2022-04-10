@@ -38,8 +38,7 @@ public class ServletUsuarioController extends HttpServlet {
 				 
 				 request.setAttribute("msg", "Excluido com sucesso!");
 				 request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
-			 }
-			 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarajax")) {
+			 } else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarajax")) {
 					 
 					 String idUser = request.getParameter("id");
 					 
@@ -47,7 +46,13 @@ public class ServletUsuarioController extends HttpServlet {
 					 
 					 response.getWriter().write("Excluido com sucesso!");
 					 
-			 }else {
+			 } else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscar")) {
+				 
+				 String nomeBuscar = request.getParameter("nomeBuscar");
+				 
+				// response.getWriter().write("Busca realizada com sucesso!");
+				 
+		 }else {
 				 request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			 }
 			 
