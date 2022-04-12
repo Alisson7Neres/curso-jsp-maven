@@ -1,6 +1,7 @@
 package com.jsp.servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jsp.dao.DAOUsuarioRepository;
 import com.jsp.model.ModelLogin;
 
@@ -48,16 +50,18 @@ public class ServletUsuarioController extends HttpServlet {
 					 
 			 } else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscar")) {
 				 
-				 String nomeBuscar = request.getParameter("nomeBuscar");
+				 String nomeBusca = request.getParameter("nomeBusca");
 				 
-				// response.getWriter().write("Busca realizada com sucesso!");
+				 List<ModelLogin>  dadosJsonUser = daoUsuarioRepository.consultar(nomeBusca);
+				 
+				 ObjectMapper mapper = new ObjectMapper();
+				 String json = mapper.writeValueAsString(dadosJsonUser);
+				 
+				response.getWriter().write(json);
 				 
 		 }else {
 				 request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			 }
-			 
-			
-			 
 			 
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -65,9 +69,7 @@ public class ServletUsuarioController extends HttpServlet {
 				request.setAttribute("msg", e.getMessage());
 				redirecionar.forward(request, response);
 			}
-
 		}
-	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

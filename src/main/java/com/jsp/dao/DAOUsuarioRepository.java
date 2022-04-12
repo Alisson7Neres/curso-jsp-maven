@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.jsp.connection.SingleConnection;
 import com.jsp.model.ModelLogin;
@@ -81,6 +83,35 @@ public class DAOUsuarioRepository {
 		
 		statement.executeUpdate();
 		connection.commit();
+	}
+	
+	public List<ModelLogin> consultar(String nome) throws SQLException {
+		
+		List<ModelLogin> lista = new ArrayList<ModelLogin>();
+		
+		String sql = "select * from model_login where upper(nome) like upper(?)";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setString(1, "%"+nome+"%");
+		
+		ResultSet result = statement.executeQuery();
+		
+		// Percorre as linhas de resultado do sql
+		while(result.next()) {
+			
+			ModelLogin modelLogin = new ModelLogin();
+			
+			modelLogin.setId(result.getLong("id"));
+			modelLogin.setLogin(result.getString("login"));
+			modelLogin.setNome(result.getString("nome"));
+			modelLogin.setEmail(result.getString("email"));
+			
+			lista.add(modelLogin);
+		}
+		
+		statement.execute();
+		
+		return lista;
 	}
 	
 	public void deletar(String id) throws SQLException {
