@@ -147,19 +147,21 @@
 						</div>
 					</div>
 
-					<table class="table">
+				<div style="overflow:scroll; height: 300px;">
+					<table class="table" id="tabelaResultados">
 						<thead>
 							<tr>
 								<th scope="col">#</th>
 								<th scope="col">Nome</th>
-								<th scope="col">Email</th>
-								<th scope="col">Login</th>
+								<th scope="col">Ver</th>
 							</tr>
 						</thead>
 						<tbody>
 
 						</tbody>
 					</table>
+				</div>
+					<span id="tabelaResultadosSpan"></span>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -184,7 +186,20 @@
 					url : urlAction,
 					data : "nomeBusca=" + nomeBusca + '&acao=buscar',
 					success : function(response) {
-
+						
+						//  Irá pegar os registros da servlet e converter para o formato JSON, percorrerá o tamanho do JSON e imprimirá na tela
+						// os resultados da consulta
+						var json = JSON.parse(response);
+						
+						$('tabelaResultados > tbody > tr').remove()
+						
+						for(var p = 0; p < json.length; p++) {
+							$('#tabelaResultados > tbody').append(
+									'<tr> <td>'+json[p].id+'</td> <td>'+json[p].nome+'</td> <td> <button class="btn btn-primary">Ver</button> </td> </tr>')
+						}
+						
+						document.getElementById('tabelaResultadosSpan').textContent = 'Resultado(s): ' + json.length;
+						
 					}
 
 				}).fail(
