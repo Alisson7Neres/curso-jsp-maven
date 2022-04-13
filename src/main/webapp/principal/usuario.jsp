@@ -52,7 +52,7 @@
 															<input type="hidden" name="acao" id="acao" value="">
 
 															<div class="form-group form-default form-static-label">
-																<input type="text" name="id" id="id"
+																<input type="text" name="id" id="id" readonly="readonly"
 																	class="form-control" value="${modelLogin.id}">
 																<span class="form-bar"></span> <label
 																	class="float-label">ID:</label>
@@ -195,7 +195,7 @@
 						
 						for(var p = 0; p < json.length; p++) {
 							$('#tabelaResultados > tbody').append(
-									'<tr> <td>'+json[p].id+'</td> <td>'+json[p].nome+'</td> <td> <button class="btn btn-primary">Ver</button> </td> </tr>')
+									'<tr> <td>'+json[p].id+'</td> <td>'+json[p].nome+'</td> <td> <button class="btn btn-primary" onclick="verEditar('+json[p].id+')">Ver</button> </td> </tr>')
 						}
 						
 						document.getElementById('tabelaResultadosSpan').textContent = 'Resultado(s): ' + json.length;
@@ -209,6 +209,13 @@
 						});
 
 			}
+		}
+		
+		function verEditar(id) {
+			
+			var urlAction = document.getElementById('formUser').action;
+			
+			window.location.href = urlAction + '?acao=buscarEditar&id=' + id;
 		}
 
 		function criarDeleteComAjax() {
