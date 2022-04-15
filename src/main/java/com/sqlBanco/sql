@@ -13,3 +13,7 @@ CREATE TABLE IF NOT EXISTS public.model_login
     senha character varying(200) COLLATE pg_catalog."default",
     CONSTRAINT login_unique UNIQUE (login)
 )
+
+## Usuário admin
+alter table model_login add column useradmin boolean not null default false;
+update model_login set  useradmin = true where login = 'admin';
