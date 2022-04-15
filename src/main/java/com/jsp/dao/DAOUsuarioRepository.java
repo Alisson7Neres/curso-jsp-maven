@@ -138,6 +138,28 @@ public class DAOUsuarioRepository {
 		return lista;
 	}
 	
+	public List<ModelLogin> listar() throws SQLException {
+		
+		List<ModelLogin> modelLogin = new ArrayList<ModelLogin>();
+		String sql = "select * from model_login";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet result = statement.executeQuery();
+		
+		while(result.next()) {
+			
+			ModelLogin listar = new ModelLogin();
+			
+			listar.setId(result.getLong("id"));
+			listar.setLogin(result.getString("login"));
+			listar.setNome(result.getString("nome"));
+			listar.setEmail(result.getString("email"));
+			
+			modelLogin.add(listar);
+		}
+		
+		return modelLogin;
+	}
+	
 	public void deletar(String id) throws SQLException {
 		
 		String sql = "DELETE FROM model_login where id = ?;";

@@ -37,16 +37,20 @@ public class ServletUsuarioController extends HttpServlet {
 				String idUser = request.getParameter("id");
 
 				daoUsuarioRepository.deletar(idUser);
+				List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
 
 				request.setAttribute("msg", "Excluido com sucesso!");
+				request.setAttribute("modelLogins", modelLogins);
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarajax")) {
 
 				String idUser = request.getParameter("id");
 
 				daoUsuarioRepository.deletar(idUser);
+				List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
 
 				response.getWriter().write("Excluido com sucesso!");
+				request.setAttribute("modelLogins", modelLogins);
 
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscar")) {
 
@@ -64,12 +68,24 @@ public class ServletUsuarioController extends HttpServlet {
 				String id = request.getParameter("id");
 
 				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioID(id);
+				List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
 
 				request.setAttribute("msg", "Usuário em edição");
 				request.setAttribute("modelLogin", modelLogin);
+				request.setAttribute("modelLogins", modelLogins);
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUser")) {
+				
+				List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
+				
+				request.setAttribute("msg", "Usuários carregados");
+				request.setAttribute("modelLogins", modelLogins);
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			} else {
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+				
+				List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
+				request.setAttribute("modelLogins", modelLogins);
 			}
 
 		} catch (Exception e) {
@@ -114,6 +130,8 @@ public class ServletUsuarioController extends HttpServlet {
 
 			}
 
+			List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
+			request.setAttribute("modelLogins", modelLogins);
 			request.setAttribute("msg", msg);
 			request.setAttribute("modelLogin", modelLogin);
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
