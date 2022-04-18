@@ -17,7 +17,7 @@ import com.jsp.model.ModelLogin;
 
 @MultipartConfig
 @WebServlet(urlPatterns = { "/ServletUsuarioController" })
-public class ServletUsuarioController extends HttpServlet {
+public class ServletUsuarioController extends ServletGenericUtil {
 	private static final long serialVersionUID = 1L;
 
 	private DAOUsuarioRepository daoUsuarioRepository = new DAOUsuarioRepository();
@@ -37,7 +37,7 @@ public class ServletUsuarioController extends HttpServlet {
 				String idUser = request.getParameter("id");
 
 				daoUsuarioRepository.deletar(idUser);
-				List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
+				List<ModelLogin> modelLogins = daoUsuarioRepository.listar(super.getUserLogado(request));
 
 				request.setAttribute("msg", "Excluido com sucesso!");
 				request.setAttribute("modelLogins", modelLogins);
@@ -47,7 +47,7 @@ public class ServletUsuarioController extends HttpServlet {
 				String idUser = request.getParameter("id");
 
 				daoUsuarioRepository.deletar(idUser);
-				List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
+				List<ModelLogin> modelLogins = daoUsuarioRepository.listar(super.getUserLogado(request));
 
 				response.getWriter().write("Excluido com sucesso!");
 				request.setAttribute("modelLogins", modelLogins);
@@ -56,7 +56,7 @@ public class ServletUsuarioController extends HttpServlet {
 
 				String nomeBusca = request.getParameter("nomeBusca");
 
-				List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultar(nomeBusca);
+				List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultar(nomeBusca, super.getUserLogado(request));
 
 				ObjectMapper mapper = new ObjectMapper();
 				String json = mapper.writeValueAsString(dadosJsonUser);
@@ -67,8 +67,8 @@ public class ServletUsuarioController extends HttpServlet {
 
 				String id = request.getParameter("id");
 
-				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioID(id);
-				List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
+				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioID(id, super.getUserLogado(request));
+				List<ModelLogin> modelLogins = daoUsuarioRepository.listar(super.getUserLogado(request));
 
 				request.setAttribute("msg", "Usuário em edição");
 				request.setAttribute("modelLogin", modelLogin);
@@ -76,7 +76,7 @@ public class ServletUsuarioController extends HttpServlet {
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUser")) {
 				
-				List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
+				List<ModelLogin> modelLogins = daoUsuarioRepository.listar(super.getUserLogado(request));
 				
 				request.setAttribute("msg", "Usuários carregados");
 				request.setAttribute("modelLogins", modelLogins);
@@ -84,7 +84,7 @@ public class ServletUsuarioController extends HttpServlet {
 			} else {
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 				
-				List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
+				List<ModelLogin> modelLogins = daoUsuarioRepository.listar(super.getUserLogado(request));
 				request.setAttribute("modelLogins", modelLogins);
 			}
 
@@ -122,7 +122,7 @@ public class ServletUsuarioController extends HttpServlet {
 			} else {
 				if (modelLogin.isNovo()) {
 					msg = "Gravado com sucesso!";
-					daoUsuarioRepository.gravarUsuario(modelLogin);
+					daoUsuarioRepository.gravarUsuario(modelLogin, super.getUserLogado(request));
 				} else {
 					msg = "Atualizado com sucesso!";
 					daoUsuarioRepository.atualizarUsuario(modelLogin);
@@ -130,7 +130,7 @@ public class ServletUsuarioController extends HttpServlet {
 
 			}
 
-			List<ModelLogin> modelLogins = daoUsuarioRepository.listar();
+			List<ModelLogin> modelLogins = daoUsuarioRepository.listar(super.getUserLogado(request));
 			request.setAttribute("modelLogins", modelLogins);
 			request.setAttribute("msg", msg);
 			request.setAttribute("modelLogin", modelLogin);

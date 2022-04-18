@@ -17,3 +17,10 @@ CREATE TABLE IF NOT EXISTS public.model_login
 ## Usuário admin
 alter table model_login add column useradmin boolean not null default false;
 update model_login set  useradmin = true where login = 'admin';
+
+## Default
+alter table model_login add column usuario_id bigint not null default 1;
+
+
+## Chave que vai fazer a referência
+alter table model_login add constraint usuario_fk FOREIGN key (usuario_id) references model_login (id);
