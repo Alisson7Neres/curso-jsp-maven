@@ -13,6 +13,8 @@ public class ModelLogin implements Serializable{
 	private String login;
 	private String senha;
 	
+	private boolean useradmin;
+	
 	public boolean isNovo() {
 		if(this.id == null) {
 			return true; // Inserir novo
@@ -58,5 +60,12 @@ public class ModelLogin implements Serializable{
 	}
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public Boolean getUseradmin() {
+		return useradmin;
+	}
+	public void setUseradmin(boolean useradmin) {
+		this.useradmin = useradmin;
 	}
 }

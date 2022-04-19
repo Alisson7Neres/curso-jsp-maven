@@ -51,6 +51,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 			modelLogin.setSenha(result.getString("senha"));
 			modelLogin.setNome(result.getString("nome"));
 			modelLogin.setEmail(result.getString("email"));
+			modelLogin.setUseradmin(result.getBoolean("useradmin"));
 		}
 		
 		preparedSql.execute();
@@ -74,6 +75,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 			modelLogin.setSenha(result.getString("senha"));
 			modelLogin.setNome(result.getString("nome"));
 			modelLogin.setEmail(result.getString("email"));
+			modelLogin.setUseradmin(result.getBoolean("useradmin"));
 		}
 		
 		preparedSql.execute();
