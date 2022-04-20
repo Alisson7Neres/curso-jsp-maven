@@ -13,6 +13,8 @@ public class ModelLogin implements Serializable{
 	private String login;
 	private String senha;
 	
+	private String perfil;
+	
 	private boolean useradmin;
 	
 	public boolean isNovo() {
@@ -67,5 +69,12 @@ public class ModelLogin implements Serializable{
 	}
 	public void setUseradmin(boolean useradmin) {
 		this.useradmin = useradmin;
+	}
+	
+	public String getPerfil() {
+		return perfil;
+	}
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
 	}
 }
