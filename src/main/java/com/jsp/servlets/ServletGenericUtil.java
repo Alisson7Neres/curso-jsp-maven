@@ -3,11 +3,11 @@ package com.jsp.servlets;
 import java.io.Serializable;
 import java.sql.SQLException;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import com.jsp.dao.DAOUsuarioRepository;
+
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 public class ServletGenericUtil extends HttpServlet implements Serializable{
 
