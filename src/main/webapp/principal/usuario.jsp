@@ -47,7 +47,7 @@
 													<div class="card-block">
 														<h4 class="sub-title">Cad. Usuário</h4>
 
-														<form class="form-material"
+														<form class="form-material" enctype="multipart/form-data"   
 															action="<%=request.getContextPath()%>/ServletUsuarioController"
 															method="post" id="formUser">
 
@@ -58,6 +58,16 @@
 																	class="form-control" value="${modelLogin.id}">
 																<span class="form-bar"></span> <label
 																	class="float-label">ID:</label>
+															</div>
+															
+															<div class="form-group form-default form-static-label">
+																<div class="input-group-prepend">
+																	<img src="" id="fotoembase64" width="70px">
+																</div>
+																<input type="file" accept="image/*" id="fileFoto" name="fileFoto"
+																	onchange="vizualizarImg('fotoembase64', 'fileFoto');" class="form-control-file">
+																<span class="form-bar"></span> <label
+																	class="float-label"></label>
 															</div>
 
 															<div class="form-group form-default form-static-label">
@@ -365,6 +375,23 @@
 
 			for (p = 0; p < elementos.length; p++) {
 				elementos[p].value = '';
+			}
+		}
+		
+		function vizualizarImg(fotoembase64, fileFoto) {
+			
+			var preview = document.getElementById(fotoembase64); // campo IMG html
+			var fileUser = document.getElementById(fileFoto).files[0];
+			var reader = new FileReader();
+			
+			reader.onloadend = function() {
+				preview.src = reader.result; // Carrega a foto na tela
+			};
+			
+			if(fileUser) {
+				reader.readAsDataURL(fileUser); // Preview da imagem
+			} else {
+				preview.src = '';
 			}
 		}
 	</script>

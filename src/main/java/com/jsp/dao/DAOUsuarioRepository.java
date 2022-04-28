@@ -34,6 +34,17 @@ public class DAOUsuarioRepository {
 		preparedSql.execute();
 		connection.commit();
 		
+		if (objeto.getFotouser() != null && !objeto.getFotouser().isEmpty()) {
+			sql = "update model_login set fotouser =?, extensaofotouser =? where login =?";
+			preparedSql = connection.prepareStatement(sql);
+			preparedSql.setString(1, objeto.getFotouser());
+			preparedSql.setString(2, objeto.getExtensaofotouser());
+			preparedSql.setString(3, objeto.getLogin());
+			
+			preparedSql.execute();
+			connection.commit();
+		}
+		
 		return this.consultaUsuario(objeto.getLogin(), userLogado);
 	}
 	
@@ -167,6 +178,18 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 		
 		statement.executeUpdate();
 		connection.commit();
+		
+		if (objeto.getFotouser() != null && !objeto.getFotouser().isEmpty()) {
+			sql = "update model_login set fotouser =?, extensaofotouser =? where id =?";
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, objeto.getFotouser());
+			statement.setString(2, objeto.getExtensaofotouser());
+			statement.setLong(3, objeto.getId());
+			
+			statement.execute();
+			connection.commit();
+		}
+		
 	}
 	
 	public List<ModelLogin> consultar(String nome, Long userLogado) throws SQLException {
