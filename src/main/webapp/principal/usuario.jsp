@@ -62,7 +62,12 @@
 															
 															<div class="form-group form-default form-static-label">
 																<div class="input-group-prepend">
-																	<img src="" id="fotoembase64" width="70px">
+																<c:if test="${modelLogin.fotouser  != '' && modelLogin.fotouser != null}">
+																	<img id="fotoembase64" src="${modelLogin.fotouser}" width="70px">
+																</c:if>
+																<c:if test="${modelLogin.fotouser  == '' || modelLogin.fotouser == null }">
+																	<img id="fotoembase64" src="<%=request.getContextPath()%>/assets/images/user-icon.jpg" width="70px">
+																</c:if>
 																</div>
 																<input type="file" accept="image/*" id="fileFoto" name="fileFoto"
 																	onchange="vizualizarImg('fotoembase64', 'fileFoto');" class="form-control-file">

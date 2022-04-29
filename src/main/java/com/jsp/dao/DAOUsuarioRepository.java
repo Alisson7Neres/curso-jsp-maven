@@ -144,6 +144,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 			modelLogin.setEmail(result.getString("email"));
 			modelLogin.setPerfil(result.getString("perfil"));
 			modelLogin.setSexo(result.getString("sexo"));
+			modelLogin.setFotouser(result.getString("fotouser"));
 		}
 		
 		preparedSql.execute();
