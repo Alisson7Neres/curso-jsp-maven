@@ -67,6 +67,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 			modelLogin.setUseradmin(result.getBoolean("useradmin"));
 			modelLogin.setPerfil(result.getString("perfil"));
 			modelLogin.setSexo(result.getString("sexo"));
+			modelLogin.setSexo(result.getString("fotouser"));
 		}
 		
 		preparedSql.execute();
@@ -93,6 +94,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 			modelLogin.setUseradmin(result.getBoolean("useradmin"));
 			modelLogin.setPerfil(result.getString("perfil"));
 			modelLogin.setSexo(result.getString("sexo"));
+			modelLogin.setSexo(result.getString("fotouser"));
 		}
 		
 		preparedSql.execute();
@@ -145,6 +147,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 			modelLogin.setPerfil(result.getString("perfil"));
 			modelLogin.setSexo(result.getString("sexo"));
 			modelLogin.setFotouser(result.getString("fotouser"));
+			modelLogin.setExtensaofotouser(result.getString("extensaofotouser"));
 		}
 		
 		preparedSql.execute();
