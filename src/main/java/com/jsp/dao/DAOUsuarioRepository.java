@@ -20,7 +20,7 @@ public class DAOUsuarioRepository {
 	
 	public ModelLogin gravarUsuario(ModelLogin objeto, Long userLogado) throws SQLException {
 		
-		String sql = "insert into model_login(login,senha,nome,email, usuario_id, perfil, sexo) values (?,?,?,?,?,?,?)";
+		String sql = "insert into model_login(login,senha,nome,email, usuario_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedSql = connection.prepareStatement(sql);
 		
 		preparedSql.setString(1, objeto.getLogin());
@@ -30,6 +30,12 @@ public class DAOUsuarioRepository {
 		preparedSql.setLong(5, userLogado);
 		preparedSql.setString(6, objeto.getPerfil());
 		preparedSql.setString(7, objeto.getSexo());
+		preparedSql.setString(8, objeto.getCep());
+		preparedSql.setString(9, objeto.getLogradouro());
+		preparedSql.setString(10, objeto.getBairro());
+		preparedSql.setString(11, objeto.getLocalidade());
+		preparedSql.setString(12, objeto.getUf());
+		preparedSql.setString(13, objeto.getNumero());
 		
 		preparedSql.execute();
 		connection.commit();
@@ -148,6 +154,12 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 			modelLogin.setSexo(result.getString("sexo"));
 			modelLogin.setFotouser(result.getString("fotouser"));
 			modelLogin.setExtensaofotouser(result.getString("extensaofotouser"));
+			modelLogin.setCep(result.getString("cep"));
+			modelLogin.setLogradouro(result.getString("logradouro"));
+			modelLogin.setBairro(result.getString("bairro"));
+			modelLogin.setLocalidade(result.getString("localidade"));
+			modelLogin.setUf(result.getString("uf"));
+			modelLogin.setNumero(result.getString("numero"));
 		}
 		
 		preparedSql.execute();
@@ -169,7 +181,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 	
 	public void atualizarUsuario(ModelLogin objeto) throws SQLException {
 		
-		String sql = "UPDATE model_login SET senha=?, login=?, nome=?, email=?, perfil=?, sexo=? WHERE id = "+objeto.getId()+";";
+		String sql = "UPDATE model_login SET senha=?, login=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=? WHERE id = "+objeto.getId()+";";
 		
 		PreparedStatement statement = connection.prepareStatement(sql);
 		
@@ -179,6 +191,12 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 		statement.setString(4, objeto.getEmail());
 		statement.setString(5, objeto.getPerfil());
 		statement.setString(6, objeto.getSexo());
+		statement.setString(7, objeto.getCep());
+		statement.setString(8, objeto.getLogradouro());
+		statement.setString(9, objeto.getBairro());
+		statement.setString(10, objeto.getLocalidade());
+		statement.setString(11, objeto.getUf());
+		statement.setString(12, objeto.getNumero());
 		
 		statement.executeUpdate();
 		connection.commit();

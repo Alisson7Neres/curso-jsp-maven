@@ -1,5 +1,5 @@
 <%@page import="com.jsp.model.ModelLogin"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1"%>
 
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
@@ -138,13 +138,61 @@
 															</div>
 
 															<div class="form-group form-default form-static-label">
+																<input type="text" name="cep" id="cep"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${modelLogin.cep}" onblur="pesquisaCep()">
+																<span class="form-bar"></span> <label
+																	class="float-label">CEP</label>
+															</div>
+															
+																<div class="form-group form-default form-static-label">
+																<input type="text" name="logradouro" id="logradouro"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${modelLogin.logradouro}">
+																<span class="form-bar"></span> <label
+																	class="float-label">Logradouro</label>
+															</div>
+															
+																<div class="form-group form-default form-static-label">
+																<input type="text" name="bairro" id="bairro"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${modelLogin.bairro}">
+																<span class="form-bar"></span> <label
+																	class="float-label">Bairro</label>
+															</div>
+															
+																<div class="form-group form-default form-static-label">
+																<input type="text" name="localidade" id="localidade"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${modelLogin.localidade}">
+																<span class="form-bar"></span> <label
+																	class="float-label">Estado</label>
+															</div>
+															
+																<div class="form-group form-default form-static-label">
+																<input type="text" name="uf" id="uf"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${modelLogin.uf}">
+																<span class="form-bar"></span> <label
+																	class="float-label">UF</label>
+															</div>
+															
+															<div class="form-group form-default form-static-label">
+																<input type="text" name="numero" id="numero"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${modelLogin.numero}">
+																<span class="form-bar"></span> <label
+																	class="float-label">Número</label>
+															</div>
+
+															<div class="form-group form-default form-static-label">
 																<input type="text" name="login" id="login"
 																	class="form-control" required="required"
 																	autocomplete="off" value="${modelLogin.login}">
 																<span class="form-bar"></span> <label
 																	class="float-label">Login</label>
 															</div>
-
+															
 															<div class="form-group form-default form-static-label">
 																<input type="password" name="senha" id="senha"
 																	class="form-control" required="required"
@@ -408,6 +456,30 @@
 				preview.src = '';
 			}
 		}
+		
+		function pesquisaCep() {
+			var cep = $('#cep').val();
+			var logradouro = $('#logradouro').val();
+			var bairro = $('#bairro').val();
+			var localidade = $('#localidade').val();
+			var uf = $('#uf').val();
+			
+			$.getJSON("https://viacep.com.br/ws/"+cep+"/json/",function(dados) {
+				
+				 if (!("erro" in dados)) {
+					$("#logradouro").val(dados.logradouro);
+					$("#bairro").val(dados.bairro);
+					$("#localidade").val(dados.localidade);
+					$("#uf").val(dados.uf);
+				 } else {
+                     //CEP pesquisado não foi encontrado.
+                     limpa_formulário_cep();
+                     alert("CEP não encontrado.");
+                 }
+			});
+				
+			}
 	</script>
+	
 </body>
 </html>
