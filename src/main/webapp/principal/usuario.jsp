@@ -202,13 +202,13 @@
 										</div>
 										<span id="msg">${msg}</span>
 
-
 									<div style="overflow:scroll; height: 300px;">
 										<table class="table" id="tabelaResultadosView">
 											<thead>
 												<tr>
 													<th scope="col">#</th>
 													<th scope="col">Nome</th>
+													<th scope="col">Foto</th>
 													<th scope="col">Ver</th>
 												</tr>
 											</thead>
@@ -217,6 +217,14 @@
 													<tr>
 														<td><c:out value="${ ml.id }"></c:out></td>
 														<td><c:out value="${ ml.nome }"></c:out></td>
+														<td>
+														<c:if test="${ml.fotouser  != '' && ml.fotouser != null }">
+																	<img id="fotoembase64" class="img-80 img-radius mCS_img_loaded" src="<c:out value="${ ml.fotouser }"/>" width="60px" height="70px" onchange="vizualizarImg('fotoembase64', 'fileFoto');">
+														</c:if>
+														<c:if test="${ml.fotouser  == '' || ml.fotouser == null }">
+																	<img id="fotoembase64" src="<%=request.getContextPath()%>/assets/images/user-icon.jpg" width="60px" height="70px">
+														</c:if>
+														</td>
 														<td><a href="ServletUsuarioController?acao=buscarEditar&id=${ ml.id }" class="btn btn-primary"
 						data-dismiss="modal">Ver</a></td>
 													</tr>
@@ -224,7 +232,6 @@
 											</tbody>
 										</table>
 									</div>
-				
 				
 									</div>
 									<!-- Page-body end -->

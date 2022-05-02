@@ -231,7 +231,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 	public List<ModelLogin> listar(Long userLogado) throws SQLException {
 		
 		List<ModelLogin> modelLogin = new ArrayList<ModelLogin>();
-		String sql = "select * from model_login where useradmin is false and usuario_id = " + userLogado;
+		String sql = "select * from model_login where useradmin is false and usuario_id = " + userLogado + " order by id asc";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet result = statement.executeQuery();
 		
@@ -240,11 +240,9 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 			ModelLogin listar = new ModelLogin();
 			
 			listar.setId(result.getLong("id"));
-			listar.setLogin(result.getString("login"));
 			listar.setNome(result.getString("nome"));
-			listar.setEmail(result.getString("email"));
-			listar.setPerfil(result.getString("perfil"));
-			listar.setSexo(result.getString("sexo"));
+			listar.setFotouser(result.getString("fotouser"));
+			listar.setExtensaofotouser(result.getString("extensaofotouser"));
 			
 			modelLogin.add(listar);
 		}
