@@ -73,7 +73,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 			modelLogin.setUseradmin(result.getBoolean("useradmin"));
 			modelLogin.setPerfil(result.getString("perfil"));
 			modelLogin.setSexo(result.getString("sexo"));
-			modelLogin.setSexo(result.getString("fotouser"));
+			modelLogin.setFotouser(result.getString("fotouser"));
 		}
 		
 		preparedSql.execute();
