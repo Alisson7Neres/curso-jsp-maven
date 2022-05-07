@@ -214,6 +214,66 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 		
 	}
 	
+	public List<ModelLogin> consultarOffset(String nome, Long userLogado, int offset) throws SQLException {
+		
+		List<ModelLogin> lista = new ArrayList<ModelLogin>();
+		
+		String sql = "select * from model_login where upper(nome) like upper(?) and useradmin is false and usuario_id = ? offset "+ offset +" limit 5";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setString(1, "%"+nome+"%");
+		statement.setLong(2, userLogado);
+		
+		ResultSet result = statement.executeQuery();
+		
+		// Percorre as linhas de resultado do sql
+		while(result.next()) {
+			
+			ModelLogin modelLogin = new ModelLogin();
+			
+			modelLogin.setId(result.getLong("id"));
+			modelLogin.setLogin(result.getString("login"));
+			modelLogin.setNome(result.getString("nome"));
+			modelLogin.setEmail(result.getString("email"));
+			modelLogin.setPerfil(result.getString("perfil"));
+			modelLogin.setSexo(result.getString("sexo"));
+			
+			lista.add(modelLogin);
+		}
+		
+		statement.execute();
+		
+		return lista;
+	}
+	
+	public int consultarTotalPaginaPaginacao(String nome, Long userLogado) throws SQLException {
+		
+		List<ModelLogin> lista = new ArrayList<ModelLogin>();
+		
+		String sql = "select count(1) as total from model_login where upper(nome) like upper(?) and useradmin is false and usuario_id = ?";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setString(1, "%"+nome+"%");
+		statement.setLong(2, userLogado);
+		
+		ResultSet result = statement.executeQuery();
+		
+		result.next();
+		
+		Double cadastros = result.getDouble("total");
+		
+		Double porPagina = 5.0;
+		Double pagina = cadastros / porPagina;
+		Double resto = pagina % 2;
+		
+		if(resto > 0) {
+			pagina ++;
+		}
+		
+		return pagina.intValue();
+		
+	}
+	
 	public List<ModelLogin> consultar(String nome, Long userLogado) throws SQLException {
 		
 		List<ModelLogin> lista = new ArrayList<ModelLogin>();
