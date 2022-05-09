@@ -167,6 +167,41 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 		return modelLogin;
 	}
 	
+	public ModelLogin consultaUsuarioID(Long id) throws SQLException {
+		
+		ModelLogin modelLogin = new ModelLogin();
+	
+		String sql = "select * from model_login where id = ? and useradmin is false";
+		
+		PreparedStatement preparedSql = connection.prepareStatement(sql);
+		preparedSql.setLong(1, id);
+		
+		
+		ResultSet result = preparedSql.executeQuery();
+		
+		while(result.next()) {
+			modelLogin.setId(result.getLong("id"));
+			modelLogin.setLogin(result.getString("login"));
+			modelLogin.setSenha(result.getString("senha"));
+			modelLogin.setNome(result.getString("nome"));
+			modelLogin.setEmail(result.getString("email"));
+			modelLogin.setPerfil(result.getString("perfil"));
+			modelLogin.setSexo(result.getString("sexo"));
+			modelLogin.setFotouser(result.getString("fotouser"));
+			modelLogin.setExtensaofotouser(result.getString("extensaofotouser"));
+			modelLogin.setCep(result.getString("cep"));
+			modelLogin.setLogradouro(result.getString("logradouro"));
+			modelLogin.setBairro(result.getString("bairro"));
+			modelLogin.setLocalidade(result.getString("localidade"));
+			modelLogin.setUf(result.getString("uf"));
+			modelLogin.setNumero(result.getString("numero"));
+		}
+		
+		preparedSql.execute();
+		
+		return modelLogin;
+	}
+	
 	public boolean validarLogin(String login) throws Exception {
 		String sql = "select count(1) > 0 as existe from model_login where upper(login) = upper('"+login+"')"; 
 		
