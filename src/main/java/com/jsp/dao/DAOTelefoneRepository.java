@@ -12,7 +12,7 @@ import com.jsp.model.ModelTelefone;
 public class DAOTelefoneRepository {
 	
 	private Connection connection;
-	private DAOUsuarioRepository daoUsuarioRepository;
+	private DAOUsuarioRepository daoUsuarioRepository = new DAOUsuarioRepository();
 	
 	public DAOTelefoneRepository() {
 		connection = SingleConnection.getConnection();
@@ -20,12 +20,12 @@ public class DAOTelefoneRepository {
 	
 	public void gravarTelefone (ModelTelefone modelTelefone) throws Exception {
 		
-		String sql = "insert into telefone (numero, usuario_pai_id , usuario_cad_id) value (?, ?, ?)";
+		String sql = "insert into telefone (numero, usuario_pai_id , usuario_cad_id) values (?, ?, ?)";
 		
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setString(1, modelTelefone.getNumero());
 		statement.setLong(2, modelTelefone.getUsuario_pai_id().getId());
-		statement.setLong(2, modelTelefone.getUsuario_cad_id().getId());
+		statement.setLong(3, modelTelefone.getUsuario_cad_id().getId());
 		
 		statement.execute();
 		connection.commit();
@@ -50,6 +50,8 @@ public class DAOTelefoneRepository {
 		String sql = "select * from telefone where usuario_pai_id =?";
 		
 		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setLong(1, idUserPai);
+		
 		ResultSet result = statement.executeQuery();
 		
 		while(result.next()) {

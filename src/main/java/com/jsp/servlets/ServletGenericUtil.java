@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 
 import com.jsp.dao.DAOUsuarioRepository;
+import com.jsp.model.ModelLogin;
 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +23,15 @@ public class ServletGenericUtil extends HttpServlet implements Serializable{
 		String usuarioLogado = (String) session.getAttribute("usuario");
 		
 		return daoUsuarioRepository.consultaUsuarioLogado(usuarioLogado).getId();
+	}
+	
+	public ModelLogin getUserLogadoObj(HttpServletRequest request) throws SQLException {
+		
+		HttpSession session = request.getSession();
+		
+		String usuarioLogado = (String) session.getAttribute("usuario");
+		
+		return daoUsuarioRepository.consultaUsuarioLogado(usuarioLogado);
 	}
 	
 	
