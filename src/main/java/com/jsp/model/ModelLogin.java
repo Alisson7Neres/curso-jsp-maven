@@ -1,6 +1,7 @@
 package com.jsp.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class ModelLogin implements Serializable {
 
@@ -15,6 +16,7 @@ public class ModelLogin implements Serializable {
 
 	private String perfil;
 	private String sexo;
+	private Date dataNascimento;
 
 	private String fotouser;
 	private String extensaofotouser;
@@ -99,6 +101,14 @@ public class ModelLogin implements Serializable {
 
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	}
+	
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+	
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 	public String getFotouser() {

@@ -20,7 +20,7 @@ public class DAOUsuarioRepository {
 	
 	public ModelLogin gravarUsuario(ModelLogin objeto, Long userLogado) throws SQLException {
 		
-		String sql = "insert into model_login(login,senha,nome,email, usuario_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into model_login(login,senha,nome,email, usuario_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero, datanascimento) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedSql = connection.prepareStatement(sql);
 		
 		preparedSql.setString(1, objeto.getLogin());
@@ -36,6 +36,7 @@ public class DAOUsuarioRepository {
 		preparedSql.setString(11, objeto.getLocalidade());
 		preparedSql.setString(12, objeto.getUf());
 		preparedSql.setString(13, objeto.getNumero());
+		preparedSql.setString(14, objeto.getDataNascimento().toString());
 		
 		preparedSql.execute();
 		connection.commit();
@@ -160,6 +161,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 			modelLogin.setLocalidade(result.getString("localidade"));
 			modelLogin.setUf(result.getString("uf"));
 			modelLogin.setNumero(result.getString("numero"));
+			modelLogin.setDataNascimento(result.getDate("dataNascimento"));
 		}
 		
 		preparedSql.execute();
@@ -216,7 +218,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 	
 	public void atualizarUsuario(ModelLogin objeto) throws SQLException {
 		
-		String sql = "UPDATE model_login SET senha=?, login=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=? WHERE id = "+objeto.getId()+";";
+		String sql = "UPDATE model_login SET senha=?, login=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=?, datanascimento=? WHERE id = "+objeto.getId()+";";
 		
 		PreparedStatement statement = connection.prepareStatement(sql);
 		
@@ -232,6 +234,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 		statement.setString(10, objeto.getLocalidade());
 		statement.setString(11, objeto.getUf());
 		statement.setString(12, objeto.getNumero());
+		statement.setDate(13, objeto.getDataNascimento());
 		
 		statement.executeUpdate();
 		connection.commit();
