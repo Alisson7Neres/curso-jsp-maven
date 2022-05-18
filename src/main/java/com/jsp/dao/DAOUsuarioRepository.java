@@ -20,7 +20,7 @@ public class DAOUsuarioRepository {
 	
 	public ModelLogin gravarUsuario(ModelLogin objeto, Long userLogado) throws SQLException {
 		
-		String sql = "insert into model_login(login,senha,nome,email, usuario_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero, datanascimento) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into model_login(login,senha,nome,email, usuario_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero, datanascimento, rendamensal) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement preparedSql = connection.prepareStatement(sql);
 		
 		preparedSql.setString(1, objeto.getLogin());
@@ -37,6 +37,7 @@ public class DAOUsuarioRepository {
 		preparedSql.setString(12, objeto.getUf());
 		preparedSql.setString(13, objeto.getNumero());
 		preparedSql.setString(14, objeto.getDataNascimento().toString());
+		preparedSql.setDouble(15, objeto.getRendaMensal());
 		
 		preparedSql.execute();
 		connection.commit();
@@ -162,6 +163,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 			modelLogin.setUf(result.getString("uf"));
 			modelLogin.setNumero(result.getString("numero"));
 			modelLogin.setDataNascimento(result.getDate("dataNascimento"));
+			modelLogin.setRendaMensal(result.getDouble("rendaMensal"));
 		}
 		
 		preparedSql.execute();
@@ -218,7 +220,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 	
 	public void atualizarUsuario(ModelLogin objeto) throws SQLException {
 		
-		String sql = "UPDATE model_login SET senha=?, login=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=?, datanascimento=? WHERE id = "+objeto.getId()+";";
+		String sql = "UPDATE model_login SET senha=?, login=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=?, datanascimento=?, rendamensal=? WHERE id = "+objeto.getId()+";";
 		
 		PreparedStatement statement = connection.prepareStatement(sql);
 		
@@ -235,6 +237,7 @@ public ModelLogin consultaUsuarioLogado(String login) throws SQLException {
 		statement.setString(11, objeto.getUf());
 		statement.setString(12, objeto.getNumero());
 		statement.setDate(13, objeto.getDataNascimento());
+		statement.setDouble(14, objeto.getRendaMensal());
 		
 		statement.executeUpdate();
 		connection.commit();

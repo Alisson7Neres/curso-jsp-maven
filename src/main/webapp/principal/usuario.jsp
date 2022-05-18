@@ -90,6 +90,13 @@
 																	value="${modelLogin.dataNascimento}"> <span
 																	class="form-bar"></span> <label class="float-label">Data:</label>
 															</div>
+															
+															<div class="form-group form-default form-static-label">
+																<input type="text" name="rendaMensal" id="rendaMensal"
+																	class="form-control" required="required"
+																	value="${modelLogin.rendaMensal}"> <span
+																	class="form-bar"></span> <label class="float-label">Renda Mensal:</label>
+															</div>
 
 															<div class="form-group form-default form-static-label">
 																<input type="email" name="email" id="email"
@@ -375,6 +382,8 @@
 	</div>
 
 	<script type="text/javascript">
+	
+	$("#rendaMensal").maskMoney({ showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."})
 	
 	$( function() {
 		  
