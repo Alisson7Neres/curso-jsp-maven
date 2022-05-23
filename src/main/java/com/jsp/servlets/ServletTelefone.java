@@ -30,24 +30,24 @@ public class ServletTelefone extends ServletGenericUtil {
 
 			String iduser = request.getParameter("iduser");
 			String acao = request.getParameter("acao");
-			
+
 			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluir")) {
-				
+
 				String idFone = request.getParameter("id");
-				
+
 				daoTelefoneRepository.deletarTelefone(Long.parseLong(idFone));
-				
+
 				String userpai = request.getParameter("userpai");
-				
+
 				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioID(Long.parseLong(userpai));
 
 				List<ModelTelefone> modelTelefones = daoTelefoneRepository.listarTelefone(modelLogin.getId());
 				request.setAttribute("modelTelefones", modelTelefones);
-				
+
 				request.setAttribute("msg", "Telefone excluído!");
 				request.setAttribute("modelLogin", modelLogin);
 				request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
-				
+
 				return;
 			}
 
@@ -55,10 +55,9 @@ public class ServletTelefone extends ServletGenericUtil {
 
 				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioID(Long.parseLong(iduser));
 
-
 				List<ModelTelefone> modelTelefones = daoTelefoneRepository.listarTelefone(modelLogin.getId());
 				request.setAttribute("modelTelefones", modelTelefones);
-				
+
 				request.setAttribute("modelLogin", modelLogin);
 				request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
 			} else {
@@ -74,32 +73,38 @@ public class ServletTelefone extends ServletGenericUtil {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		try {
 
-				String acao = request.getParameter("acao");
-				
-	
-				String numero = request.getParameter("numero");
-				String usuario_pai_id = request.getParameter("id");
-	
+			String acao = request.getParameter("acao");
+
+			String numero = request.getParameter("numero");
+			String usuario_pai_id = request.getParameter("id");
+
+			// se não tiver telefone, entra na condição
+			if (!daoTelefoneRepository.existeFone(numero, Long.valueOf(usuario_pai_id))) {
+
 				ModelTelefone modelTelefone = new ModelTelefone();
-			
+
 				modelTelefone.setNumero(numero);
 				modelTelefone.setUsuario_pai_id(daoUsuarioRepository.consultaUsuarioID(Long.parseLong(usuario_pai_id)));
 				modelTelefone.setUsuario_cad_id(super.getUserLogadoObj(request));
 
 				daoTelefoneRepository.gravarTelefone(modelTelefone);
-				
-				List<ModelTelefone> modelTelefones = daoTelefoneRepository.listarTelefone(Long.parseLong(usuario_pai_id));
-				
-				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioID(Long.parseLong(usuario_pai_id));
-				
-				request.setAttribute("modelLogin", modelLogin);
-				request.setAttribute("modelTelefones", modelTelefones);
+
 				request.setAttribute("msg", "Salvo com sucesso");
-				request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
-				
+			} else {
+				request.setAttribute("msg", "Telefone já existe");
+			}
+
+			List<ModelTelefone> modelTelefones = daoTelefoneRepository.listarTelefone(Long.parseLong(usuario_pai_id));
+
+			ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioID(Long.parseLong(usuario_pai_id));
+
+			request.setAttribute("modelLogin", modelLogin);
+			request.setAttribute("modelTelefones", modelTelefones);
+			request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
