@@ -2,6 +2,8 @@ package com.jsp.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModelLogin implements Serializable {
 
@@ -31,6 +33,8 @@ public class ModelLogin implements Serializable {
 	private Double rendaMensal;
 
 	private boolean useradmin;
+	
+	private List<ModelTelefone> telefones = new ArrayList<ModelTelefone>();
 
 	public boolean isNovo() {
 		if (this.id == null) {
@@ -183,6 +187,24 @@ public class ModelLogin implements Serializable {
 	
 	public void setRendaMensal(Double rendaMensal) {
 		this.rendaMensal = rendaMensal;
+	}
+	
+	public List<ModelTelefone> getTelefones() {
+		return telefones;
+	}
+	public void setTelefones(List<ModelTelefone> telefones) {
+		this.telefones = telefones;
+	}
+	
+	public String getMostrarTelefoneRel() {
+		
+		String fone = "";
+		
+		for (ModelTelefone modelTelefone : telefones) {
+			fone += modelTelefone.getNumero() + "\n";
+		}
+		
+		return fone;
 	}
 
 }
