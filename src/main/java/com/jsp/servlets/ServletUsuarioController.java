@@ -1,8 +1,10 @@
 package com.jsp.servlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.compress.utils.IOUtils;
@@ -165,7 +167,11 @@ public class ServletUsuarioController extends ServletGenericUtil {
 					
 				}
 				
-				byte[] relatorio = new ReportUtil().gerarRelatorio(modelLogin, "Invoice", request.getServletContext());
+				// sub relatorio
+				HashMap<String, Object> params = new HashMap<String, Object>();
+				params.put("PARAM_SUB_REPORT", request.getServletContext().getRealPath("relatorio") + File.separator);
+				//------
+				byte[] relatorio = new ReportUtil().gerarRelatorio(modelLogin, "Invoice", params, request.getServletContext());
 				response.setHeader("Content-Disposition", "attachment;filename=arquivo.pdf");
 				response.getOutputStream().write(relatorio);
 				
@@ -181,7 +187,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			RequestDispatcher redirecionar = request.getRequestDispatcher("erro.jsp");
+			RequestDispatcher redirecionar = request.getRequestDispatcher("error.jsp");
 			request.setAttribute("msg", e.getMessage());
 			redirecionar.forward(request, response);
 		}
@@ -268,7 +274,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			RequestDispatcher redirecionar = request.getRequestDispatcher("erro.jsp");
+			RequestDispatcher redirecionar = request.getRequestDispatcher("error.jsp");
 			request.setAttribute("msg", e.getMessage());
 			redirecionar.forward(request, response);
 		}

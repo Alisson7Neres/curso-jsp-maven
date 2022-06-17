@@ -7,12 +7,12 @@ h1 {
 
 .msg {
 	text-align: center;
-	padding: 20px;
-	background-color : #f44336; /* Red */
-	color: white;
+	 padding: 20px; 
+	/* background-color : #f44336;  Red */ 
+	color: red;
 	transition: 0.3s;
-	border-top: 1px solid black;
-	border: 1px solid black;
+	/* border-top: 1px solid black; */
+	/* border: 1px solid black; */
 	overflow: auto;
 }
 
