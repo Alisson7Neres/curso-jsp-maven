@@ -63,6 +63,7 @@
 															<button class="btn btn-primary" type="button" onclick="imprimirHtml();">Imprimir
 																Relatório form</button>
 																		<button class="btn btn-primary" type="button" onclick="imprimirPdf()">Imprimir PDF </button>
+																		<button class="btn btn-primary" type="button" onclick="imprimirExcel()">Imprimir Excel </button>
 
 														</form>
 
@@ -122,7 +123,11 @@
 			document.getElementById("acaoRelatorioImprimirTipo").value = 'imprimirRelatorioPDF';
 			$("#formUser").submit();
 		}
-	
+		
+		function imprimirExcel() {
+			document.getElementById("acaoRelatorioImprimirTipo").value = 'imprimirRelatoriorExcel';
+			$("#formUser").submit();
+		}
 	
 		$(function() {
 
